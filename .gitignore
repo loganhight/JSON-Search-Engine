@@ -1,0 +1,7 @@
+*build
+*.vscode
+*test_data
+DocumentIndex.txt
+OrganizationIndex.txt
+PersonIndex.txt
+WordIndex.txt
