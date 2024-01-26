@@ -42,6 +42,13 @@ public:
                     vector<string> queryArguments;
                     for (int i = 3 ; i < argc; i++) { queryArguments.push_back((string)argv[i]); }
 
+                    //TODO - move to runQuery()
+                    for (size_t i = 0; i < queryArguments.size(); i++) {
+                        string curr = queryArguments.at(i);
+                        transform(curr.begin(), curr.end(), curr.begin(), ::tolower);
+                    }
+
+
                     // load existing index from default files
                     loadIndex("../WordIndex.txt", "../OrganizationIndex.txt", "../PersonIndex.txt", "../DocumentIndex.txt");
 
@@ -373,6 +380,9 @@ public:
                 // gets just person
                 person = queryArguments.at(i).substr(7, queryArguments.at(i).size() - 7);
 
+                // make person lowercase
+                transform(person.begin(), person.end(), person.begin(), ::tolower);
+
                 // retrieves all documents associated with specified person
                 handler.findPersonDocs(person).treeToVect(personDocs);
 
@@ -388,6 +398,9 @@ public:
 
                 // gets just organization
                 org = queryArguments.at(i).substr(4, queryArguments.at(i).size() - 4);
+
+                // make org lowercase
+                transform(org.begin(), org.end(), org.begin(), ::tolower);
 
                 // retrieves all documents associated with specified organization
                 handler.findOrgDocs(org).treeToVect(orgDocs);
@@ -405,6 +418,9 @@ public:
                 // get just not word
                 notWord = queryArguments.at(i).substr(1, queryArguments.at(i).size() - 1);
 
+                // make notWord lowercase
+                transform(notWord.begin(), notWord.end(), notWord.begin(), ::tolower);
+
                 // stem not word to match words in wordIndex
                 notWord = handler.stem(notWord);
 
@@ -418,6 +434,9 @@ public:
             // word
             else {
                 word = queryArguments.at(i);
+
+                // make word lowercase
+                transform(word.begin(), word.end(), word.begin(), ::tolower);
 
                 // stem word to match words in wordIndex
                 word = handler.stem(word);
